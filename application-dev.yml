@@ -1,0 +1,13 @@
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    password: guest
+    username: guest
+    connection-timeout: 10s
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8070/eureka/

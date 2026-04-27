@@ -1,0 +1,42 @@
+server:
+  port: 9010
+
+spring:
+  cloud:
+    function:
+      definition: expiringSubscription;expiredSubscription;sendWelcomeEmail
+    stream:
+      bindings:
+        sendWelcomeEmail-in-0:
+          consumer:
+            max-attempts: 3
+            back-off-initial-interval: 3000
+          destination: membership-created-exchange
+          group: ${spring.application.name}
+        sendWelcomeEmail-out-0:
+          destination: email-confirmation-exchange
+        expiringSubscription-in-0:
+          destination: expiring-subscription-exchange
+          group: ${spring.application.name}
+        expiredSubscription-in-0:
+          destination: expired-subscription-exchange
+          group: ${spring.application.name}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USER:}
+    password: ${GMAIL_PW:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    debug: true
+
+logging:
+  level:
+    gr:
+      georgestaav:
+        messageservice: debug

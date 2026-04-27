@@ -1,11 +1,53 @@
 server:
   port: 8072
 
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://eurekaserver:8070/eureka/
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false  # switch to true for automatic routing
+              lower-case-service-id: true
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 10s
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://keycloak:7070/realms/master/protocol/openid-connect/certs"
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      sliding-window-size: 10
+      permitted-number-of-calls-in-half-open-state: 2
+      failure-rate-threshold: 50
+      wait-duration-in-open-state:
+        seconds: 10
+
+logging:
+  level:
+    gr:
+      georgestaav:
+        gatewayserver: debug
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+---
+# Override για το DEV profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Όταν τρέχεις το Gateway από το IntelliJ
+          jwk-set-uri: "http://localhost:7070/realms/master/protocol/openid-connect/certs"
