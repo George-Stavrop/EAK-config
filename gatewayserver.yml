@@ -18,7 +18,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: "http://keycloak:7070/realms/master/protocol/openid-connect/certs"
+          jwk-set-uri: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
 
 resilience4j.circuitbreaker:
   configs:
