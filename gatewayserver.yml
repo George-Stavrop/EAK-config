@@ -33,21 +33,9 @@ logging:
   level:
     gr:
       georgestaav:
-        gatewayserver: debug
+        gatewayserver: info
     org:
       springframework:
         cloud:
-          gateway: trace
+          gateway: warn
 
----
-# Override για το DEV profile
-spring:
-  config:
-    activate:
-      on-profile: dev
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          # Όταν τρέχεις το Gateway από το IntelliJ
-          jwk-set-uri: "http://localhost:7070/realms/master/protocol/openid-connect/certs"
