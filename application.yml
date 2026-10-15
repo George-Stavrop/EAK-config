@@ -17,10 +17,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "health,info,prometheus"
   endpoint:
-    shutdown:
-      access: unrestricted
     health:
       probes:
         enabled: true
