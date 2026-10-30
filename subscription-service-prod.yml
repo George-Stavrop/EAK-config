@@ -7,10 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-  h2:
-    console:
-      enabled: false
+logging:
+  level:
+    root: INFO
+    gr.georgestaav.subscriptionservice: INFO
